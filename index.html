@@ -1,98 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Calculadora de Activación de Cobertura</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Calculadora de Prepagos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Tipografía Sora -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
+      font-family: 'Sora', system-ui, sans-serif;
+      background: #f4f6ff;
       margin: 0;
-      padding: 20px;
+      padding: 16px;
+      color: #005E5C;
     }
+
     .card {
-      max-width: 520px;
+      max-width: 480px;
       margin: auto;
       background: #ffffff;
-      padding: 24px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
+
     h1 {
       font-size: 20px;
-      margin-bottom: 16px;
+      font-weight: 700;
+      color: #3D57C7;
+      margin-bottom: 14px;
     }
+
     label {
-      display: block;
-      margin-top: 14px;
-      font-weight: bold;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
       font-size: 14px;
+      font-weight: 400;
+      margin-top: 14px;
+      display: block;
     }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin-top: 6px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-family: 'Sora', sans-serif;
+    }
+
     button {
-      margin-top: 20px;
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1d4ed8;
-    }
-    .result {
-      margin-top: 24px;
+      width: 100%;
       padding: 16px;
-      background: #f0f9ff;
-      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .btn-primary {
+      background: #3D57C7;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #ABC94A;
+      color: #003b3a;
+      margin-top: 12px;
+    }
+
+    .result {
+      margin-top: 22px;
+      background: rgba(194,173,255,.25);
+      padding: 18px;
+      border-radius: 14px;
       display: none;
     }
-    .result p {
+
+    .item {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .highlight {
+      font-size: 22px;
+      font-weight: 700;
+      color: #3D57C7;
       margin: 6px 0;
     }
+
     .message {
-      margin-top: 12px;
-      padding: 10px;
+      margin-top: 14px;
+      padding: 14px;
       background: #ffffff;
-      border: 1px dashed #94a3b8;
+      border: 2px dashed #3D57C7;
+      border-radius: 10px;
       font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .copied {
+      font-size: 13px;
+      color: #005E5C;
+      margin-top: 8px;
+      display: none;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Calculadora de Activación de Cobertura</h1>
+<div class="card">
+  <h1>Calculadora de Prepagos</h1>
 
-    <label>Fecha de activación</label>
-    <input type="date" id="fecha" />
+  <label>📅 Fecha de activación</label>
+  <input type="date" id="fecha">
 
-    <label>Medio de pago</label>
-    <select id="medio">
-      <option value="">Seleccionar</option>
-      <option value="tarjeta">Tarjeta de Crédito</option>
-      <option value="cbu">Débito CBU</option>
-    </select>
+  <label>💳 Medio de pago</label>
+  <select id="medio">
+    <option value="">Seleccionar</option>
+    <option value="tarjeta">Tarjeta de crédito</option>
+    <option value="cbu">Débito CBU</option>
+  </select>
 
-    <label>Cuota mensual total ($)</label>
-    <input type="number" id="cuota" placeholder="Ej: 45000" />
+  <label>💰 Cuota mensual del plan</label>
+  <input type="number" id="cuota" placeholder="Ej: 45000">
 
-    <button onclick="calcular()">Calcular</button>
+  <button class="btn-primary" onclick="calcular()">Calcular</button>
 
-    <div class="result" id="resultado">
-      <p><strong>Inicio de cobertura:</strong> <span id="inicio"></span></p>
-      <p><strong>Días de cobertura:</strong> <span id="dias"></span></p>
-      <p><strong>Importe proporcional:</strong> $<span id="proporcional"></span></p>
-      <p><strong>Forma de cobro:</strong> <span id="cobro"></span></p>
+  <div class="result" id="resultado">
+    <div class="item">✔ Cobertura desde: <strong id="inicio"></strong></div>
+    <div class="item">📆 Días de cobertura: <strong id="dias"></strong></div>
 
-      <div class="message" id="mensaje"></div>
-    </div>
+    <div class="item">💵 Monto a pagar ahora</div>
+    <div class="highlight">$<span id="proporcional"></span></div>
+
+    <div class="item">🧾 Forma de cobro: <strong id="cobro"></strong></div>
+
+    <div class="message" id="mensaje"></div>
+
+    <button class="btn-secondary" onclick="copiarMensaje()">📋 Copiar mensaje</button>
+    <div class="copied" id="copiado">Mensaje copiado ✔</div>
   </div>
+</div>
 
 <script>
 function calcular() {
@@ -100,50 +154,53 @@ function calcular() {
   const medio = document.getElementById("medio").value;
   const cuota = parseFloat(document.getElementById("cuota").value);
 
-  if (!fechaInput || !medio || !cuota) {
-    alert("Completá todos los campos");
-    return;
-  }
+  if (!fechaInput || !medio || !cuota) return;
 
   const fecha = new Date(fechaInput + "T00:00:00");
   const dia = fecha.getDate();
-  const mes = fecha.getMonth();
-  const anio = fecha.getFullYear();
-
-  const diasMes = new Date(anio, mes + 1, 0).getDate();
+  const diasMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0).getDate();
   const diasActivos = diasMes - dia + 1;
   const escenario = dia <= 15 ? "A" : "B";
 
   let proporcional = 0;
-  let textoCobro = "";
+  let cobro = "";
   let mensaje = "";
 
   if (escenario === "A") {
     proporcional = (cuota * (diasActivos / diasMes)).toFixed(2);
-    textoCobro = medio === "tarjeta"
-      ? "Débito antes del día 20."
-      : "Se cobrará junto con la cuota del mes siguiente (desde el día 5).";
+
+    if (medio === "tarjeta") {
+      cobro = "Antes del 20 se enviará el débito a la tarjeta. El afiliado lo pagará el mes que viene, al vencimiento de su resumen.";
+    } else {
+      cobro = "El monto proporcional se cobrará junto con la cuota del mes siguiente.";
+    }
 
     mensaje =
-      "Tu cobertura ya se encuentra activa desde el " + fecha.toLocaleDateString() +
-      ". El importe proporcional correspondiente es $ " + proporcional + ". " +
-      textoCobro;
+      `La cobertura se encuentra activa desde el ${fecha.toLocaleDateString()}. ` +
+      `El monto a abonar ahora es $${proporcional}. ${cobro}`;
   } else {
-    textoCobro = "No se factura proporcional. Primera cuota completa el mes siguiente.";
+    cobro = "La primera cuota completa se cobrará el mes siguiente.";
     mensaje =
-      "Tu cobertura se activó desde el " + fecha.toLocaleDateString() +
-      ". No se facturará monto proporcional. La primera cuota completa se cobrará el mes siguiente.";
+      `La cobertura se activa desde el ${fecha.toLocaleDateString()}. ` +
+      `No se factura monto proporcional. ${cobro}`;
   }
 
   document.getElementById("inicio").innerText = fecha.toLocaleDateString();
   document.getElementById("dias").innerText = diasActivos;
-  document.getElementById("proporcional").innerText = escenario === "A" ? proporcional : "0.00";
-  document.getElementById("cobro").innerText = textoCobro;
+  document.getElementById("proporcional").innerText = escenario === "A" ? proporcional : "0";
+  document.getElementById("cobro").innerText = cobro;
   document.getElementById("mensaje").innerText = mensaje;
 
   document.getElementById("resultado").style.display = "block";
+  document.getElementById("copiado").style.display = "none";
+}
+
+function copiarMensaje() {
+  navigator.clipboard.writeText(document.getElementById("mensaje").innerText);
+  document.getElementById("copiado").style.display = "block";
 }
 </script>
 
 </body>
 </html>
+
