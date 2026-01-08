@@ -233,11 +233,11 @@ function calcular() {
     if (medio === "tarjeta") {
     mensaje =
       `La cobertura se activa el ${fechaAlta.toLocaleDateString()}. ` +
-      `El monto proporcional es de $${proporcional}. El débito se enviará antes del 20 del mes en curso y se abonará al vencimiento del resumen de la tarjeta.`;
+      `El monto proporcional es de $${proporcional}. El débito se enviará antes del día 20 del mes en curso y se abonará al vencimiento del resumen de la tarjeta.`;
     } else {
       mensaje =
         `La cobertura se activa el ${fechaAlta.toLocaleDateString()}. ` +
-        `El monto proporcional es de $${proporcional} y se cobrará junto con la cuota del mes siguiente.`;
+        `El monto proporcional es de $${proporcional} y se debitará junto con la cuota total del mes siguiente.`;
     }
   }
 
